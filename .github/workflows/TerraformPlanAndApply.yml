@@ -1,0 +1,27 @@
+name: TerraformPlanAndApply
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  TerraformJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckoutCode
+        uses: actions/checkout@v3
+
+      - name: SetupTerraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.0
+
+      - name: TerraformInit
+        run: terraform -chdir=Terraform init
+
+      - name: TerraformPlan
+        run: terraform -chdir=Terraform plan -out=plan.tfplan
+
+      - name: TerraformApply
+        run: terraform -chdir=Terraform apply -auto-approve plan.tfplan
+        if: github.ref == 'refs/heads/main'
