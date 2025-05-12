@@ -27,3 +27,9 @@ variable "EnableNatGateway" {
   type        = bool
   default     = true
 }
+
+variable "AwsRegion" {
+  description = "Región AWS donde desplegar"
+  type        = string
+  default     = "us-east-1"
+}
