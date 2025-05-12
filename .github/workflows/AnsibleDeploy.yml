@@ -1,0 +1,22 @@
+name: AnsibleDeploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  DeployJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckoutCode
+        uses: actions/checkout@v3
+
+      - name: InstallAnsible
+        run: sudo apt update && sudo apt install -y ansible
+
+      - name: RunPlaybook
+        uses: dawidd6/action-ssh@v2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            ansible-playbook -i "${{ secrets.EC2_HOST }}," Ansible/Playbook.yml
