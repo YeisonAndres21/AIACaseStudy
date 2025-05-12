@@ -1,0 +1,16 @@
+- name: Instalar paquete CloudWatch Agent
+  apt:
+    name: amazon-cloudwatch-agent
+    state: present
+    update_cache: yes
+
+- name: Copiar configuración de CloudWatch
+  template:
+    src: CloudWatchAgent.json.j2
+    dest: /opt/aws/amazon-cloudwatch-agent/bin/config.json
+
+- name: Iniciar servicio CloudWatch Agent
+  command: >
+    /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+    -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+    -s
