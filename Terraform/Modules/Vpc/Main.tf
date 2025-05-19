@@ -1,15 +1,21 @@
-terraform {
-  required_version = ">= 1.2.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.0"
-    }
-  }
+resource "aws_vpc" "MainVpc" {
+  cidr_block = var.VpcCidr
+  tags = { Name = var.VpcName }
 }
 
-provider "aws" {
-  region = "us-east-1"
+resource "aws_subnet" "Public" {
+  for_each               = toset(var.PublicSubnets)
+  vpc_id                 = aws_vpc.MainVpc.id
+  cidr_block             = each.value
+  map_public_ip_on_launch = true
+  tags = { Name = "${var.VpcName}-public-${replace(each.value, "/.*/", "")}" }
+}
+
+resource "aws_subnet" "Private" {
+  for_each   = toset(var.PrivateSubnets)
+  vpc_id     = aws_vpc.MainVpc.id
+  cidr_block = each.value
+  tags = { Name = "${var.VpcName}-private-${replace(each.value, "/.*/", "")}" }
 }
 
 module "VpcModule" {
