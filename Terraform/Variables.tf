@@ -1,3 +1,23 @@
+variable "VpcCidrBlock" {
+  type        = string
+  description = "CIDR del VPC principal"
+}
+
+variable "PublicSubnets" {
+  type        = list(string)
+  description = "Subredes públicas"
+}
+
+variable "PrivateSubnets" {
+  type        = list(string)
+  description = "Subredes privadas"
+}
+
+variable "AvailabilityZones" {
+  type        = list(string)
+  description = "Zonas de disponibilidad"
+}
+
 variable "VpcName" {
   description = "Nombre del VPC"
   type        = string
