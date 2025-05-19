@@ -12,6 +12,5 @@ Implementa una solución “Cloud-First” inspirada en QA.com/case-studies:
 ├── Terraform/          # IaC: VPC, subredes, NAT
 ├── Ansible/           # Roles y Playbook de configuración
 ├── .github/           # Workflows de CI/CD
-├── Diagrams/          # Diagrama de arquitectura
 ├── README.md
 └── LICENSE
