@@ -1,7 +1,7 @@
 output "PublicSubnetIds" {
-  value = module.VpcModule.PublicSubnetIds
+  value = aws_subnet.Public[*].id
 }
 
 output "PrivateSubnetIds" {
-  value = module.VpcModule.PrivateSubnetIds
+  value = aws_subnet.Private[*].id
 }
